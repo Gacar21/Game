@@ -19,6 +19,14 @@ public class Gamepanel extends JPanel implements Runnable{
     public final int screenHeight = tileSize * maxScreenRow;
     // 48 x 16 = 768  ; 48 x 12 = 576 title scale
 
+    //configuracion de mapa
+
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int wordWidth = tileSize * maxWorldCol;
+    public final int wordHeight = tileSize * maxWorldRow;
+
+
     // FPS
     int FPS =60;
 
@@ -28,8 +36,8 @@ public class Gamepanel extends JPanel implements Runnable{
     KeyHandler keyHandler = new KeyHandler();
 
     Thread gameThread;
-
-    Player player = new Player(this,keyHandler);
+    public CollisionCheckout cChecker = new CollisionCheckout(this);
+    public Player player = new Player(this,keyHandler);
 
 
     public Gamepanel() {

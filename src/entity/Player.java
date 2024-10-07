@@ -12,17 +12,30 @@ public class Player extends Entity{
     Gamepanel gp;
     KeyHandler keyh;
 
+    public final int screenX;
+    public final int screenY;
+
     public Player(Gamepanel gp, KeyHandler keyh) {
         this.gp = gp;
         this.keyh = keyh;
+
+        screenX = gp.screenWidth/2 - (gp.tileSize/2);
+        screenY = gp.screenHeight/2 - (gp.tileSize/2);
+
+        solidArea = new Rectangle();
+        solidArea.x = 8;
+        solidArea.y = 16;
+        solidArea.width = 32;
+        solidArea.height = 32;
+
 
         setDefaultValues();
         getPlayerImage();
     }
 
     public void setDefaultValues(){
-        x = 100;
-        y = 100;
+        worldX = gp.tileSize * 23;
+        worldY = gp.tileSize * 21;
         speed = 4;
         direction = "down";
     }
@@ -59,22 +72,34 @@ public class Player extends Entity{
 
             if(keyh.upPressed){
                 direction = "up";
-                y -= speed;
-
             }else if(keyh.downPressed){
                 direction = "down";
-                y += speed;
             }else if(keyh.leftPressed){
                 direction = "left";
-                x -= speed;
             } else if (keyh.rightPressed) {
                 direction = "right";
-                x += speed;
+
 
             }
+            // verificar colission
+
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+
+        // si la coloicion es falsa, el jugador se mueve
+
+            if(collisionOn == false){
+
+                switch (direction){
+                    case "up":worldY -= speed;break;
+                    case "down":worldY += speed; break;
+                    case "left":worldX -= speed;break;
+                    case "right": worldX += speed;break;
+                }
+            }
+
 
             spriteCounter++;
-
             if(spriteCounter >= 10){
                 if(spriteNum == 1){
                     spriteNum = 2;
@@ -157,7 +182,7 @@ public class Player extends Entity{
                  }
                  break;
         }
-        g2d.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+        g2d.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
     }
 
 }

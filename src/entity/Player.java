@@ -2,6 +2,7 @@ package entity;
 
 import main.Gamepanel;
 import main.KeyHandler;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -45,47 +46,54 @@ public class Player extends Entity{
     }
 
     public void getPlayerImage(){
-        try {
+        up1 = setup("arriba1");
+        up2 = setup("arriba2");
+        up3 = setup("arriba3");
+        up4 = setup("arriba4");
+        up5 = setup("arriba5");
+        up6 = setup("arriba6");
+        up7 = setup("arriba7");
+        up8 = setup("arriba8");
+        down1 = setup("abajo1");
+        down2 = setup("abajo2");
+        down3 = setup("abajo3");
+        down4 = setup("abajo4");
+        down5 = setup("abajo5");
+        down6 = setup("abajo6");
+        down7 = setup("abajo7");
+        down8 = setup("abajo8");
+        left1 = setup("izquierda1");
+        left2 = setup("izquierda2");
+        left3 = setup("izquierda3");
+        left4 = setup("izquierda4");
+        left5 = setup("izquierda5");
+        left6 = setup("izquierda6");
+        left7 = setup("izquierda7");
+        left8 = setup("izquierda8");
+        right1 = setup("derecha1");
+        right2 = setup("derecha2");
+        right3 = setup("derecha3");
+        right4 = setup("derecha4");
+        right5 = setup("derecha5");
+        right6 = setup("derecha6");
+        right7 = setup("derecha7");
+        right8 = setup("derecha8");
 
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/arriba1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/arriba2.png"));
-            up3 = ImageIO.read(getClass().getResourceAsStream("/player/arriba3.png"));
-            up4 = ImageIO.read(getClass().getResourceAsStream("/player/arriba4.png"));
-            up5 = ImageIO.read(getClass().getResourceAsStream("/player/arriba5.png"));
-            up6 = ImageIO.read(getClass().getResourceAsStream("/player/arriba6.png"));
-            up7 = ImageIO.read(getClass().getResourceAsStream("/player/arriba7.png"));
-            up8 = ImageIO.read(getClass().getResourceAsStream("/player/arriba8.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/abajo1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/abajo2.png"));
-            down3 = ImageIO.read(getClass().getResourceAsStream("/player/abajo3.png"));
-            down4 = ImageIO.read(getClass().getResourceAsStream("/player/abajo4.png"));
-            down5 = ImageIO.read(getClass().getResourceAsStream("/player/abajo5.png"));
-            down6 = ImageIO.read(getClass().getResourceAsStream("/player/abajo6.png"));
-            down7 = ImageIO.read(getClass().getResourceAsStream("/player/abajo7.png"));
-            down8 = ImageIO.read(getClass().getResourceAsStream("/player/abajo8.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/izquierda1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/izquierda2.png"));
-            left3 = ImageIO.read(getClass().getResourceAsStream("/player/izquierda3.png"));
-            left4 = ImageIO.read(getClass().getResourceAsStream("/player/izquierda4.png"));
-            left5 = ImageIO.read(getClass().getResourceAsStream("/player/izquierda5.png"));
-            left6 = ImageIO.read(getClass().getResourceAsStream("/player/izquierda6.png"));
-            left7 = ImageIO.read(getClass().getResourceAsStream("/player/izquierda7.png"));
-            left8 = ImageIO.read(getClass().getResourceAsStream("/player/izquierda8.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/derecha1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/derecha2.png"));
-            right3 = ImageIO.read(getClass().getResourceAsStream("/player/derecha3.png"));
-            right4 = ImageIO.read(getClass().getResourceAsStream("/player/derecha4.png"));
-            right5 = ImageIO.read(getClass().getResourceAsStream("/player/derecha5.png"));
-            right6 = ImageIO.read(getClass().getResourceAsStream("/player/derecha6.png"));
-            right7 = ImageIO.read(getClass().getResourceAsStream("/player/derecha7.png"));
-            right8 = ImageIO.read(getClass().getResourceAsStream("/player/derecha8.png"));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
+    public BufferedImage setup(String imageName){
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
 
+        try {
+            image = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName + ".png"));
+            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return image;
+    }
     public void update(){
 
         if(keyh.upPressed == true || keyh.downPressed == true || keyh.leftPressed == true || keyh.rightPressed == true){
@@ -309,7 +317,7 @@ public class Player extends Entity{
                  }
                  break;
         }
-        g2d.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        g2d.drawImage(image, screenX, screenY, null);
       //visualizar el marco solido del personaje
 //        g2d.setColor(Color.red);
 //        g2d.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);

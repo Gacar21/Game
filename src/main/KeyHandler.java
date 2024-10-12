@@ -4,7 +4,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
-
+    //debug
+    boolean checkDrawTime = false;
 
     public boolean upPressed, downPressed, leftPressed, rightPressed;
 
@@ -29,6 +30,14 @@ public class KeyHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_D) {
             rightPressed = true;
+        }
+        //debug
+        if(code == KeyEvent.VK_T) {
+            if(checkDrawTime == false) {
+                checkDrawTime = true;
+            } else if (checkDrawTime == true) {
+                checkDrawTime = false;
+            }
         }
     }
 

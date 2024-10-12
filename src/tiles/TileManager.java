@@ -1,11 +1,13 @@
 package tiles;
 
 import main.Gamepanel;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
+
 import java.io.BufferedReader;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -24,43 +26,27 @@ public class TileManager {
     }
 
     public void getTileImage(){
-
+        setup(0,"tierra",false);
+        setup(1,"agua",true);
+        setup(2,"Piedra",true);
+        setup(3,"flores",false);
+        setup(4,"hongo",true);
+        setup(5,"arena",false);
+        setup(6,"camino",false);
+        setup(7,"muro",true);
+        }
+    public void setup(int index, String imageName, boolean collision){
+        UtilityTool uTool = new UtilityTool();
         try {
+            tiles[index]= new Tile();
+            tiles[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName + ".png"));
+            tiles[index].image = uTool.scaleImage(tiles[index].image,gp.tileSize, gp.tileSize);
+            tiles[index].collision = collision;
 
-            tiles[0] = new Tile();
-            tiles[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tierra.png"));
-
-            tiles[1] = new Tile();
-            tiles[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/agua.png"));
-            tiles[1].collision = true;
-
-            tiles[2] = new Tile();
-            tiles[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Piedra.png"));
-            tiles[2].collision = true;
-
-            tiles[3] = new Tile();
-            tiles[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/flores.png"));
-
-
-            tiles[4] = new Tile();
-            tiles[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/hongo.png"));
-            tiles[4].collision = true;
-
-            tiles[5] = new Tile();
-            tiles[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/arena.png"));
-
-            tiles[6] = new Tile();
-            tiles[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/camino.png"));
-
-            tiles[7] = new Tile();
-            tiles[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/muro.png"));
-            tiles[7].collision = true;
-
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
-
-        }
+    }
     public void loadMap(String filePath){
 
         try{
@@ -110,7 +96,7 @@ public class TileManager {
                     worldY + gp.tileSize> gp.player.worldY - gp.player.screenY &&
                     worldY - gp.tileSize< gp.player.worldY + gp.player.screenY) {
 
-                g2d.drawImage(tiles[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                g2d.drawImage(tiles[tileNum].image, screenX, screenY, null);
             }
 
             worldCol++;

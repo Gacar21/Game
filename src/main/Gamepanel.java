@@ -22,8 +22,8 @@ public class Gamepanel extends JPanel implements Runnable{
 
     //configuracion de mapa
 
-    public final int maxWorldCol = 50;
-    public final int maxWorldRow = 50;
+    public  int maxWorldCol;
+    public  int maxWorldRow;
 
 
 

@@ -15,7 +15,7 @@ public class Player extends Entity{
 
     public final int screenX;
     public final int screenY;
-   public int hasKey = 0;
+//   public int hasKey = 0;
    int standCounter = 0;
 
     public Player(Gamepanel gp, KeyHandler keyh) {
@@ -168,39 +168,6 @@ public class Player extends Entity{
     public void pickUpObject(int i){
             if(i != 999){
 
-                String objectName = gp.obj[i].name;
-
-                switch (objectName){
-                    case "llave":
-                        gp.playSE(2);
-                        hasKey++;
-                        gp.obj[i]= null;
-                        gp.ui.showMessage("Has obtenido una llave!");
-
-                        break;
-                    case "puerta":
-                        gp.playSE(3);
-                        if(hasKey > 0){
-                            gp.obj[i] = null;
-                            hasKey--;
-                            gp.ui.showMessage("Puerta abierta!");
-                        }else{
-                            gp.ui.showMessage("Necesitas una llave!");
-                        }
-
-                        break;
-                    case "botas":
-                        gp.playSE(4);
-                        speed += 2;
-                        gp.obj[i] = null;
-                        gp.ui.showMessage("Velocidad +1");
-                        break;
-                    case "cofre":
-                        gp.ui.gameFinished = true;
-                        gp.stopMusic();
-                        gp.playSE(1);
-                        break;
-                }
             }
     }
 

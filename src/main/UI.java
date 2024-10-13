@@ -3,7 +3,7 @@ package main;
 import object.Obj_llave;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
+
 import java.text.DecimalFormat;
 
 public class UI {
@@ -23,8 +23,8 @@ public class UI {
         this.gp = gp;
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 40);
-//        Obj_llave key = new Obj_llave(gp);
-//        keyImagen = key.image;
+//       Obj_llave key = new Obj_llave(gp);
+//       //keyImagen = key.image;
 
 
     }

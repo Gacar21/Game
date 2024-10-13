@@ -2,24 +2,21 @@ package entity;
 
 import main.Gamepanel;
 import main.KeyHandler;
-import main.UtilityTool;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
+
 
 public class Player extends Entity{
-    Gamepanel gp;
+
     KeyHandler keyh;
 
     public final int screenX;
     public final int screenY;
-//   public int hasKey = 0;
-   int standCounter = 0;
+    int standCounter = 0;
 
     public Player(Gamepanel gp, KeyHandler keyh) {
-        this.gp = gp;
+        super(gp);
+
         this.keyh = keyh;
 
         screenX = gp.screenWidth/2 - (gp.tileSize/2);
@@ -39,62 +36,49 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues(){
-        worldX = gp.tileSize * 42;
+        worldX = gp.tileSize * 38;
         worldY = gp.tileSize * 10;
         speed = 4;
         direction = "down";
     }
 
     public void getPlayerImage(){
-        up1 = setup("arriba1");
-        up2 = setup("arriba2");
-        up3 = setup("arriba3");
-        up4 = setup("arriba4");
-        up5 = setup("arriba5");
-        up6 = setup("arriba6");
-        up7 = setup("arriba7");
-        up8 = setup("arriba8");
-        down1 = setup("abajo1");
-        down2 = setup("abajo2");
-        down3 = setup("abajo3");
-        down4 = setup("abajo4");
-        down5 = setup("abajo5");
-        down6 = setup("abajo6");
-        down7 = setup("abajo7");
-        down8 = setup("abajo8");
-        left1 = setup("izquierda1");
-        left2 = setup("izquierda2");
-        left3 = setup("izquierda3");
-        left4 = setup("izquierda4");
-        left5 = setup("izquierda5");
-        left6 = setup("izquierda6");
-        left7 = setup("izquierda7");
-        left8 = setup("izquierda8");
-        right1 = setup("derecha1");
-        right2 = setup("derecha2");
-        right3 = setup("derecha3");
-        right4 = setup("derecha4");
-        right5 = setup("derecha5");
-        right6 = setup("derecha6");
-        right7 = setup("derecha7");
-        right8 = setup("derecha8");
+        up1 = setup("/player/arriba1");
+        up2 = setup("/player/arriba2");
+        up3 = setup("/player/arriba3");
+        up4 = setup("/player/arriba4");
+        up5 = setup("/player/arriba5");
+        up6 = setup("/player/arriba6");
+        up7 = setup("/player/arriba7");
+        up8 = setup("/player/arriba8");
+        down1 = setup("/player/abajo1");
+        down2 = setup("/player/abajo2");
+        down3 = setup("/player/abajo3");
+        down4 = setup("/player/abajo4");
+        down5 = setup("/player/abajo5");
+        down6 = setup("/player/abajo6");
+        down7 = setup("/player/abajo7");
+        down8 = setup("/player/abajo8");
+        left1 = setup("/player/izquierda1");
+        left2 = setup("/player/izquierda2");
+        left3 = setup("/player/izquierda3");
+        left4 = setup("/player/izquierda4");
+        left5 = setup("/player/izquierda5");
+        left6 = setup("/player/izquierda6");
+        left7 = setup("/player/izquierda7");
+        left8 = setup("/player/izquierda8");
+        right1 = setup("/player/derecha1");
+        right2 = setup("/player/derecha2");
+        right3 = setup("/player/derecha3");
+        right4 = setup("/player/derecha4");
+        right5 = setup("/player/derecha5");
+        right6 = setup("/player/derecha6");
+        right7 = setup("/player/derecha7");
+        right8 = setup("/player/derecha8");
 
     }
 
-    public BufferedImage setup(String imageName){
-        UtilityTool uTool = new UtilityTool();
-        BufferedImage image = null;
-
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName + ".png"));
-            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return image;
-    }
-    public void update(){
+  public void update(){
 
         if(keyh.upPressed == true || keyh.downPressed == true || keyh.leftPressed == true || keyh.rightPressed == true){
 
@@ -117,6 +101,11 @@ public class Player extends Entity{
             //verificar colision con objetos
             int objIndex = gp.cChecker.chekObject(this,true);
             pickUpObject(objIndex);
+            //check NPC collision
+
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            interactNPC(npcIndex);
+
         // si la colision es falsa, el jugador se mueve
 
             if(collisionOn == false){
@@ -168,7 +157,15 @@ public class Player extends Entity{
     public void pickUpObject(int i){
             if(i != 999){
 
+                gp.obj[i] = null;
+
             }
+    }
+
+    public void interactNPC(int i){
+        if(i != 999){
+            System.out.println("Me estas tocando!");
+        }
     }
 
     public void draw(Graphics2D g2d){

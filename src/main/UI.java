@@ -4,11 +4,14 @@ import object.Obj_llave;
 
 import java.awt.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 
 public class UI {
     Gamepanel gp;
     Graphics2D g2d;
+    Font Purisa;
     Font arial_40, arial_80B;
     public boolean messageOn = false;
     public String message = "";
@@ -18,8 +21,16 @@ public class UI {
 
     public UI(Gamepanel gp) {
         this.gp = gp;
-        arial_40 = new Font("Arial", Font.PLAIN, 40);
-        arial_80B = new Font("Arial", Font.BOLD, 40);
+
+        try {
+            InputStream is = getClass().getResourceAsStream("/font/Purisa Bold.ttf");
+            Purisa = Font.createFont(Font.TRUETYPE_FONT, is);
+
+        } catch (FontFormatException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
     public void showMessage(String text) {
@@ -29,7 +40,8 @@ public class UI {
     public void draw(Graphics2D g2d) {
         this.g2d = g2d;
 
-        g2d.setFont(arial_40);
+        g2d.setFont(Purisa);
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2d.setColor(Color.WHITE);
 
         //play state

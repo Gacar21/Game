@@ -51,9 +51,9 @@ public class NPC_gb extends Entity {
 
     public void setDialogue(){
         dialogue[0] = "Hola, me llamo Gabriel";
-        dialogue[1] = "la vida me trata como si trabajara \n14 horas en un taller y \nme llamara alejo";
-        dialogue[2] = "Esa gente rubia que estudia \ncon ansiedad y al final \nno le hacen prueba";
-        dialogue[3] = "tengo un amigo carpintero, uno \nque vende ropa y otro que \narregla moto y yo, sin moto, \nsin cama y sin ropa";
+        dialogue[1] = "solo como los fines de mes \ncuando me consignan \nquinteros en accion";
+//        dialogue[2] = "Esa gente rubia que estudia \ncon ansiedad y al final \nno le hacen prueba";
+//        dialogue[3] = "tengo un amigo carpintero, uno \nque vende ropa y otro que \narregla moto y yo, sin moto, \nsin cama y sin ropa";
 
     }
     public void setAction(){

@@ -11,6 +11,7 @@ public class NPC_gb extends Entity {
         speed = 1;
 
         getImage();
+        setDialogue();
     }
     public void getImage(){
         up1 = setup("/npc/09arriba");
@@ -47,6 +48,14 @@ public class NPC_gb extends Entity {
         right8 = setup("/npc/24derecha");
 
     }
+
+    public void setDialogue(){
+        dialogue[0] = "Hola, me llamo Gabriel";
+        dialogue[1] = "la vida me trata como si trabajara \n14 horas en un taller y \nme llamara alejo";
+        dialogue[2] = "Esa gente rubia que estudia \ncon ansiedad y al final \nno le hacen prueba";
+        dialogue[3] = "tengo un amigo carpintero, uno \nque vende ropa y otro que \narregla moto y yo, sin moto, \nsin cama y sin ropa";
+
+    }
     public void setAction(){
 
         actionLockCounter ++;
@@ -73,5 +82,9 @@ public class NPC_gb extends Entity {
 
 
     }
+    public void speak() {
 
+        // do this character specific stuff
+        super.speak();
+    }
  }

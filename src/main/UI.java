@@ -10,22 +10,16 @@ public class UI {
     Gamepanel gp;
     Graphics2D g2d;
     Font arial_40, arial_80B;
-//    BufferedImage keyImagen;
     public boolean messageOn = false;
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished = false;
-
-    double playTime;
-    DecimalFormat dFormat = new DecimalFormat("#0.00");
+    public String currentDialogue = "";
 
     public UI(Gamepanel gp) {
         this.gp = gp;
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 40);
-//       Obj_llave key = new Obj_llave(gp);
-//       //keyImagen = key.image;
-
 
     }
     public void showMessage(String text) {
@@ -34,15 +28,23 @@ public class UI {
     }
     public void draw(Graphics2D g2d) {
         this.g2d = g2d;
+
         g2d.setFont(arial_40);
         g2d.setColor(Color.WHITE);
+
+        //play state
 
         if(gp.gameState == gp.playState){
             //do playstate stuff later
 
         }
+        // pause state
         if(gp.gameState == gp.pauseState){
             drawPauseScreen();
+        }
+        // Dialogue state
+        if(gp.gameState == gp.dialogueState){
+            drawDialogueScreen();
         }
 
     }
@@ -53,6 +55,40 @@ public class UI {
         int y = gp.screenHeight/2;
 
         g2d.drawString(text,x,y);
+
+    }
+    public void drawDialogueScreen(){
+
+        //windows
+        int x = gp.tileSize*2;
+        int y = gp.tileSize/2;
+        int width = gp.screenWidth - (gp.tileSize*4);
+        int height = gp.tileSize*4;
+
+        drawSubWindow(x, y, width, height);
+        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 28F));
+
+        x += gp.tileSize;
+        y += gp.tileSize;
+
+        for(String line: currentDialogue.split("\n")){
+            g2d.drawString(line, x, y);
+            y += 40;
+        }
+
+
+
+    }
+    public void drawSubWindow(int x, int y, int width, int height) {
+
+        Color c = new Color(0,0,0,210);
+        g2d.setColor(c);
+        g2d.fillRoundRect(x, y, width, height, 35, 35);
+
+        c = new Color(255,255,255);
+        g2d.setColor(c);
+        g2d.setStroke(new BasicStroke(5));
+        g2d.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
 
     }
     public int getXforCenteredText(String text) {

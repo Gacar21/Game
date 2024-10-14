@@ -164,8 +164,12 @@ public class Player extends Entity{
 
     public void interactNPC(int i){
         if(i != 999){
-            System.out.println("Me estas tocando!");
+            if(gp.keyHandler.jPressed == true) {
+                gp.gameState = gp.dialogueState;
+                gp.npc[i].speak();
+            }
         }
+        gp.keyHandler.jPressed = false;
     }
 
     public void draw(Graphics2D g2d){

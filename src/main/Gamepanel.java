@@ -32,7 +32,7 @@ public class Gamepanel extends JPanel implements Runnable{
     int FPS =60;
 
     TileManager tileM = new TileManager(this);
-    KeyHandler keyHandler = new KeyHandler(this);
+    public KeyHandler keyHandler = new KeyHandler(this);
     Sonido music = new Sonido();
     Sonido se = new Sonido();
     public CollisionCheckout cChecker = new CollisionCheckout(this);
@@ -49,6 +49,7 @@ public class Gamepanel extends JPanel implements Runnable{
     public int gameState;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int dialogueState = 3;
 
 
 
@@ -148,6 +149,10 @@ public class Gamepanel extends JPanel implements Runnable{
         if(gameState == playState){
             //jugador
             player.update();
+        }
+        if(gameState == pauseState){
+            // nothhing
+        }
             //npc
             for (int i = 0; i < npc.length ; i++) {
                 if(npc[i] != null){
@@ -155,10 +160,8 @@ public class Gamepanel extends JPanel implements Runnable{
                     }
             }
 
-        }
-        if(gameState == pauseState){
-            // nothhing
-        }
+
+
 
     }
     public void paintComponent(Graphics g) {

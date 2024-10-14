@@ -1,9 +1,13 @@
 package main;
 
+import object.Obj_Heart;
 import object.Obj_llave;
+import object.SuperObject;
 
 import java.awt.*;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
@@ -12,7 +16,7 @@ public class UI {
     Gamepanel gp;
     Graphics2D g2d;
     Font Purisa;
-    Font arial_40, arial_80B;
+    BufferedImage heartFull, heartMed,heartVoid;
     public boolean messageOn = false;
     public String message = "";
     int messageCounter = 0;
@@ -32,6 +36,12 @@ public class UI {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        //create hud object
+        SuperObject heart = new Obj_Heart(gp);
+        heartFull = heart.image;
+        heartMed = heart.image2;
+        heartVoid = heart.image3;
 
     }
     public void showMessage(String text) {
@@ -54,16 +64,50 @@ public class UI {
         //play state
 
         if(gp.gameState == gp.playState){
-            //do playstate stuff later
+            drawPlayerLife();
 
         }
         // pause state
         if(gp.gameState == gp.pauseState){
+            drawPlayerLife();
             drawPauseScreen();
+
         }
         // Dialogue state
         if(gp.gameState == gp.dialogueState){
+            drawPlayerLife();
             drawDialogueScreen();
+        }
+
+    }
+    public void drawPlayerLife(){
+
+
+        int x = gp.tileSize/2;
+        int y = gp.tileSize/2;
+        int i = 0;
+
+        //draw max life
+        while(i < gp.player.maxLife/2){
+            g2d.drawImage(heartVoid, x, y, null);
+            i++;
+            x += gp.tileSize;
+        }
+        //reset
+         x = gp.tileSize/2;
+         y = gp.tileSize/2;
+         i = 0;
+
+         //draw current life
+        while (i < gp.player.life){
+            g2d.drawImage(heartMed, x, y, null);
+            i++;
+            if(i < gp.player.life){
+                g2d.drawImage(heartFull, x, y, null);
+            }
+            i++;
+            x += gp.tileSize;
+
         }
 
     }

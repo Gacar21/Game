@@ -47,6 +47,7 @@ public class Gamepanel extends JPanel implements Runnable{
 
     //GAME STATE
     public int gameState;
+    public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
     public final int dialogueState = 3;
@@ -65,8 +66,8 @@ public class Gamepanel extends JPanel implements Runnable{
     public void setupGame(){
         aSettter.setObject();
         aSettter.setNPC();
-        playMusic(0);
-        gameState = playState;
+//      playMusic(0);
+        gameState = titleState;
     }
 
     public void startGameThread() {
@@ -74,45 +75,6 @@ public class Gamepanel extends JPanel implements Runnable{
         gameThread.start();
     }
 
-    @Override
-//    public void run() {
-//
-//     double drawIntervalo = 1000000000 / FPS; // 0.16666666 segundos
-//     double nextDrawTime = System.nanoTime() + drawIntervalo;
-//
-//    while(gameThread != null) {
-//
-//
-//        // update: actualizacion de posicion del personaje
-//        update();
-//
-//
-//
-//        // draw : dibujar en pantalla a la personaje y su actualizacion
-//        repaint();
-//
-//
-//
-//        try {
-//            double romainingTime = nextDrawTime - System.nanoTime();
-//            romainingTime = romainingTime/1000000;
-//
-//            if(romainingTime < 0){
-//                romainingTime = 0;
-//            }
-//
-//            Thread.sleep((long)romainingTime);
-//
-//            nextDrawTime += drawIntervalo;
-//
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//    }
-//
-//
-//    }
 
     //delta mode
     public void run(){
@@ -172,29 +134,36 @@ public class Gamepanel extends JPanel implements Runnable{
         if(keyHandler.checkDrawTime == true){
             drawStart = System.nanoTime();
         }
-
-
-        //tile
-        tileM.draw(g2d);
-        //object
-        for(int i = 0; i < obj.length; i++){
-            if(obj[i] != null){
-                obj[i].draw(g2d,this);
-            }
+        // title screen
+        if(gameState == titleState){
+            ui.draw(g2d);
         }
-        //NPC
-        for(int i = 0; i < npc.length; i++){
-            if(npc[i] != null){
-                npc[i].draw(g2d);
+        //others
+        else{
+            //tile
+            tileM.draw(g2d);
+            //object
+            for(int i = 0; i < obj.length; i++){
+                if(obj[i] != null){
+                    obj[i].draw(g2d,this);
+                }
             }
+            //NPC
+            for(int i = 0; i < npc.length; i++){
+                if(npc[i] != null){
+                    npc[i].draw(g2d);
+                }
+            }
+
+
+            //player
+            player.draw(g2d);
+
+            //ui
+            ui.draw(g2d);
         }
 
 
-        //player
-        player.draw(g2d);
-
-        //ui
-        ui.draw(g2d);
         //debug
         if(keyHandler.checkDrawTime == true){
             long drawEnd = System.nanoTime();

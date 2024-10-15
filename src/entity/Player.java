@@ -111,6 +111,10 @@ public class Player extends Entity{
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
 
+            //check event
+            gp.eHandler.checkEvent();
+            gp.keyHandler.jPressed = false;
+
         // si la colision es falsa, el jugador se mueve
 
             if(collisionOn == false){
@@ -174,7 +178,7 @@ public class Player extends Entity{
                 gp.npc[i].speak();
             }
         }
-        gp.keyHandler.jPressed = false;
+
     }
 
     public void draw(Graphics2D g2d){

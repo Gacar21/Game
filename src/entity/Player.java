@@ -113,7 +113,7 @@ public class Player extends Entity{
 
             //check mosnter collision
             int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
-
+            contactMonster(monsterIndex);
 
             //check event
             gp.eHandler.checkEvent();
@@ -165,6 +165,14 @@ public class Player extends Entity{
             }
 
         }
+        // this needs to be outside of key if statement
+      if(invincible == true){
+          invincibleCounter++;
+          if(invincibleCounter > 60){
+              invincible = false;
+              invincibleCounter = 0;
+          }
+      }
     }
 
     public void pickUpObject(int i){
@@ -181,6 +189,15 @@ public class Player extends Entity{
             }
         }
 
+    }
+
+    public void contactMonster(int i){
+        if(i != 999){
+            if(invincible == false){
+                life -= 1;
+                invincible = true;
+            }
+        }
     }
 
     public void draw(Graphics2D g2d){
@@ -296,11 +313,25 @@ public class Player extends Entity{
                  }
                  break;
         }
-        g2d.drawImage(image, screenX, screenY, null);
-      //visualizar el marco solido del personaje
-//        g2d.setColor(Color.red);
-//        g2d.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+        if(invincible == true){
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3F));
+        }
+            g2d.drawImage(image, screenX, screenY, null);
+
+        //reset alpha
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F));
 
     }
 
 }
+
+//debug (visualizar contador de inmunidad
+//        g2d.setFont(new Font("Arial", Font.PLAIN, 26));
+//        g2d.setColor(Color.WHITE);
+//        g2d.drawString("invincible: " + invincibleCounter, 10,400);
+
+
+
+//visualizar el marco solido del personaje
+//        g2d.setColor(Color.red);
+//        g2d.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);

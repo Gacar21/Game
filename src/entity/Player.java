@@ -36,8 +36,8 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues(){
-        worldX = gp.tileSize * 38;
-        worldY = gp.tileSize * 10;
+        worldX = gp.tileSize * 42;
+        worldY = gp.tileSize * 31;
         speed = 4;
         direction = "down";
 
@@ -111,6 +111,10 @@ public class Player extends Entity{
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
 
+            //check mosnter collision
+            int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+
+
             //check event
             gp.eHandler.checkEvent();
             gp.keyHandler.jPressed = false;
@@ -165,8 +169,6 @@ public class Player extends Entity{
 
     public void pickUpObject(int i){
             if(i != 999){
-
-                gp.obj[i] = null;
 
             }
     }

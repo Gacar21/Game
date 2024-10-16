@@ -45,19 +45,19 @@ public class EventHandler {
         }
         if(canTouchEvent == true) {
             //eventos perder vida y curarse:
-            if(hit(30,28,"left")== true){
-                //event happens
-                damagePit(30,28,gp.dialogueState);
-            }
-
-            if(hit(31,26,"any")== true){
-                //event happens
-                damagePit(31,26,gp.dialogueState);
-            }
-
-            if(hit(39,19,"down")== true){
-                heallingPool(39,19,gp.dialogueState);
-            }
+//            if(hit(30,28,"left")== true){
+//                //event happens
+//                damagePit(30,28,gp.dialogueState);
+//            }
+//
+//            if(hit(31,26,"any")== true){
+//                //event happens
+//                damagePit(31,26,gp.dialogueState);
+//            }
+//
+//            if(hit(39,19,"down")== true){
+//                heallingPool(39,19,gp.dialogueState);
+//            }
         }
 
         //teleport
@@ -99,21 +99,21 @@ public class EventHandler {
 //        gp.player.worldX = gp.tileSize*41;
 //        gp.player.worldY = gp.tileSize*30;
 //    }
-    public void damagePit(int col, int row, int gameState){
-        gp.gameState = gameState;
-        gp.ui.currentDialogue = "te heriste!";
-        gp.player.life -= 1;
-//        eventRect[col][row].eventDone = true;
-        canTouchEvent = false;
-
-    }
-    public void heallingPool(int col, int row,int gameState){
-        if(gp.keyHandler.jPressed == true){
-            gp.gameState = gameState;
-            gp.ui.currentDialogue = "Bebiste del agua magica alv";
-            gp.player.life = gp.player.maxLife;
-
-        }
-        gp.keyHandler.jPressed = false;
-    }
+//    public void damagePit(int col, int row, int gameState){
+//        gp.gameState = gameState;
+//        gp.ui.currentDialogue = "te heriste!";
+//        gp.player.life -= 1;
+////        eventRect[col][row].eventDone = true;
+//        canTouchEvent = false;
+//
+//    }
+//    public void heallingPool(int col, int row,int gameState){
+//        if(gp.keyHandler.jPressed == true){
+//            gp.gameState = gameState;
+//            gp.ui.currentDialogue = "Bebiste del agua magica alv";
+//            gp.player.life = gp.player.maxLife;
+//
+//        }
+//        gp.keyHandler.jPressed = false;
+//    }
 }

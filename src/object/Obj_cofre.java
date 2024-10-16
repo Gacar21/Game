@@ -1,21 +1,18 @@
 package object;
 
+import entity.Entity;
 import main.Gamepanel;
 
-import javax.imageio.ImageIO;
 
-public class Obj_cofre extends SuperObject{
-    Gamepanel gp;
+public class Obj_cofre extends Entity {
+
 
     public Obj_cofre(Gamepanel gp) {
 
-        this.gp = gp;
+        super(gp);
+
         name = "cofre";
-        try{
-            image = ImageIO.read(getClass().getResourceAsStream("/Objects/cofre.png"));
-            uTool.scaleImage(image, gp.tileSize, gp.tileSize);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        down1 =setup("/Objects/cofre");
+        collision = true;
     }
 }

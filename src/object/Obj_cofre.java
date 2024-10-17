@@ -12,7 +12,7 @@ public class Obj_cofre extends Entity {
         super(gp);
 
         name = "cofre";
-        down1 =setup("/Objects/cofre");
+        down1 =setup("/Objects/cofre", gp.tileSize,gp.tileSize);
         collision = true;
     }
 }

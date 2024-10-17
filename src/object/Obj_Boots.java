@@ -10,6 +10,6 @@ public class Obj_Boots extends Entity {
     public Obj_Boots(Gamepanel gp) {
         super(gp);
         name = "botas";
-        down1 = setup("/Objects/bota");
+        down1 = setup("/Objects/bota", gp.tileSize,gp.tileSize);
     }
 }

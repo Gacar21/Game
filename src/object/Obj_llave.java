@@ -11,7 +11,7 @@ public class Obj_llave extends Entity {
         super(gp);
 
         name = "llave";
-        down1 = setup("/Objects/llave");
+        down1 = setup("/Objects/llave", gp.tileSize,gp.tileSize);
 
     }
 

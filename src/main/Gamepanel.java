@@ -56,6 +56,7 @@ public class Gamepanel extends JPanel implements Runnable{
     public final int playState = 1;
     public final int pauseState = 2;
     public final int dialogueState = 3;
+    public final int characterState = 4;
 
 
 
@@ -116,15 +117,11 @@ public class Gamepanel extends JPanel implements Runnable{
         if(gameState == playState){
             //jugador
             player.update();
-        }
-        if(gameState == pauseState){
-            // nothhing
-        }
             //npc
             for (int i = 0; i < npc.length ; i++) {
                 if(npc[i] != null){
                     npc[i].update();
-                    }
+                }
             }
             for(int i = 0; i < monster.length; i++){
                 if(monster[i]  != null){
@@ -137,6 +134,11 @@ public class Gamepanel extends JPanel implements Runnable{
 
                 }
             }
+        }
+        if(gameState == pauseState){
+            // nothhing
+        }
+
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

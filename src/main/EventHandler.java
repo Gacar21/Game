@@ -109,6 +109,7 @@ public class EventHandler {
 //    }
 //    public void heallingPool(int col, int row,int gameState){
 //        if(gp.keyHandler.jPressed == true){
+ //          gp.player. attackCancel = true;
 //            gp.gameState = gameState;
 //            gp.ui.currentDialogue = "Bebiste del agua magica alv";
 //            gp.player.life = gp.player.maxLife;

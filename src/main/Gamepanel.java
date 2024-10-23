@@ -145,7 +145,7 @@ public class Gamepanel extends JPanel implements Runnable{
         Graphics2D g2d = (Graphics2D) g;
         //debug
         long drawStart = 0;
-        if(keyHandler.checkDrawTime == true){
+        if(keyHandler.showDebugText == true){
             drawStart = System.nanoTime();
         }
         // title screen
@@ -197,12 +197,23 @@ public class Gamepanel extends JPanel implements Runnable{
 
 
         //debug
-        if(keyHandler.checkDrawTime == true){
+        if(keyHandler.showDebugText == true){
             long drawEnd = System.nanoTime();
             long passed = drawEnd - drawStart;
+
+            g2d.setFont(new Font("Arial", Font.PLAIN,20));
             g2d.setColor(Color.WHITE);
-            g2d.drawString("Draw Time: " + passed, 10,400 );
-            System.out.println("Draw Time: " + passed);
+            int x =10;
+            int y = 400;
+            int lineHeight = 20;
+
+            g2d.drawString("WorldX" + player.worldX, x, y); y += lineHeight;
+            g2d.drawString("WorldY" + player.worldY, x, y); y += lineHeight;
+
+            g2d.drawString("Col" + (player.worldX + player.solidArea.x)/tileSize, x, y); y += lineHeight;
+            g2d.drawString("Row" + (player.worldY + player.solidArea.y)/tileSize, x, y); y += lineHeight;
+
+
         }
 
 

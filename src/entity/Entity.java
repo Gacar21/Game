@@ -59,6 +59,7 @@ public class Entity {
     //item atribute
     public int attacValue;
     public int defenseValue;
+    public String description = "";
 
 
 
@@ -90,7 +91,6 @@ public class Entity {
         }
 
     }
-
     public void update(){
         setAction();
         collisionOn = false;
@@ -104,7 +104,12 @@ public class Entity {
             if(gp.player.invincible == false){
                 //we can give damage
                 gp.playSE(6);
-                gp.player.life -= 1;
+                int damage = attack - gp.player.defense;
+                if(damage < 0){
+                    damage = 0;
+                }
+                gp.player.life -= damage;
+
                 gp.player.invincible = true;
             }
         }
@@ -154,7 +159,6 @@ public class Entity {
             }
         }
     }
-
     public void draw(Graphics2D g2d){
         BufferedImage image = null;
 

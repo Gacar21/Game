@@ -113,6 +113,7 @@ public class EventHandler {
 //            gp.gameState = gameState;
 //            gp.ui.currentDialogue = "Bebiste del agua magica alv";
 //            gp.player.life = gp.player.maxLife;
+//            gp.aSetter.setMonster();
 //
 //        }
 //        gp.keyHandler.jPressed = false;

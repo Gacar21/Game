@@ -4,9 +4,11 @@ import main.Gamepanel;
 import main.KeyHandler;
 import object.Obj_Shield_Wood;
 import object.Obj_Sword_Normal;
+import object.Obj_llave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 
 public class Player extends Entity{
@@ -17,6 +19,8 @@ public class Player extends Entity{
     public final int screenY;
     int standCounter = 0;
     public boolean attackCancel = false;
+    public ArrayList<Entity> inventory = new ArrayList<>();
+    public final int maxInventorySize = 20;
 
     public Player(Gamepanel gp, KeyHandler keyh) {
         super(gp);
@@ -41,8 +45,8 @@ public class Player extends Entity{
         setDefaultValues();
         getPlayerImage();
         getPlayerAttackImage();
+        setItems();
     }
-
     public void setDefaultValues(){
         worldX = gp.tileSize * 42;
         worldY = gp.tileSize * 31;
@@ -63,13 +67,19 @@ public class Player extends Entity{
         attack = getAttack();
         defense = getDefense();
     }
+    public void setItems(){
+
+        inventory.add(currentWeapon);
+        inventory.add(currentShield);
+        inventory.add(new Obj_llave(gp));
+    }
+
     public int getAttack(){
         return attack = strength * currentWeapon.attacValue;
     }
     public int getDefense(){
         return defense = dexterity * currentShield.defenseValue;
     }
-
     public void getPlayerImage(){
         up1 = setup("/player/arriba1", gp.tileSize,gp.tileSize);
         up2 = setup("/player/arriba2", gp.tileSize,gp.tileSize);
@@ -115,8 +125,7 @@ public class Player extends Entity{
         attackright1 = setup("/player/attackright", gp.tileSize*2,gp.tileSize);
         attackrigth2 = setup("/player/attackright1", gp.tileSize*2,gp.tileSize);
     }
-
-  public void update(){
+    public void update(){
 
         if(attacking == true){
             attacking();
@@ -263,13 +272,11 @@ public class Player extends Entity{
             attacking = false;
         }
     }
-
     public void pickUpObject(int i){
             if(i != 999){
 
             }
     }
-
     public void interactNPC(int i){
         if(gp.keyHandler.jPressed == true){
             if(i != 999){
@@ -280,12 +287,15 @@ public class Player extends Entity{
 
         }
     }
-
     public void contactMonster(int i){
         if(i != 999){
             if(invincible == false){
                 gp.playSE(6);
-                life -= 1;
+                int damage = gp.monster[i].attack - defense;
+                if(damage < 0){
+                    damage = 0;
+                }
+                life -= damage;
                 invincible = true;
             }
         }
@@ -294,17 +304,46 @@ public class Player extends Entity{
         if(i != 999) {
             if(gp.monster[i].invincible == false){
                 gp.playSE(5);
-                gp.monster[i].life -= 1;
+
+                int damage = attack - gp.monster[i].defense;
+                if(damage < 0){
+                    damage = 0;
+                }
+
+                gp.monster[i].life -= damage;
+                gp.ui.addMessage(damage + " daño!");
+
                 gp.monster[i].invincible = true;
                 gp.monster[i].damageReaction();
 
                 if(gp.monster[i].life <= 0){
                     gp.monster[i].dying = true;
+                    gp.ui.addMessage("Has matado " + gp.monster[i].name + "!");
+                    gp.ui.addMessage("Exp" + gp.monster[i].exp);
+                    exp += gp.monster[i].exp;
+                    checkLevelUp();
                 }
             }
         }
     }
+    public void checkLevelUp(){
+        if(exp >= nextLevelExp){
+            level++;
+            nextLevelExp = nextLevelExp*2;
+            maxLife += 2;
+            strength++;
+            dexterity++;
+            attack = getAttack();
+            defense = getDefense();
 
+            gp.playSE(8);
+            gp.gameState = gp.dialogueState;
+            gp.ui.currentDialogue = "Eres nivel " + level + " ahora! \n"
+            + "Eres mas fuerte ahora!";
+
+
+        }
+    }
     public void draw(Graphics2D g2d){
 
 

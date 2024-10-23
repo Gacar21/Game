@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class UI {
     Gamepanel gp;
@@ -15,11 +16,13 @@ public class UI {
     Font Purisa;
     BufferedImage heartFull, heartMed,heartVoid;
     public boolean messageOn = false;
-    public String message = "";
-    int messageCounter = 0;
+    ArrayList<String> message = new ArrayList<>();
+    ArrayList<Integer> messageCounter = new ArrayList<>();
     public boolean gameFinished = false;
     public String currentDialogue = "";
     public int commandNum = 0;
+    public int slotCol= 0;
+    public int slotRow = 0;
 
     public UI(Gamepanel gp) {
         this.gp = gp;
@@ -41,9 +44,10 @@ public class UI {
         heartVoid = heart.image3;
 
     }
-    public void showMessage(String text) {
-        message = text;
-        messageOn = true;
+    public void addMessage(String text) {
+
+        message.add(text);
+        messageCounter.add(0);
     }
     public void draw(Graphics2D g2d) {
         this.g2d = g2d;
@@ -62,6 +66,7 @@ public class UI {
 
         if(gp.gameState == gp.playState){
             drawPlayerLife();
+            drawMessage();
 
         }
         // pause state
@@ -78,6 +83,7 @@ public class UI {
         //character state
         if(gp.gameState == gp.characterState){
             drawCharacterScreen();
+            drawInventory();
         }
 
     }
@@ -109,6 +115,31 @@ public class UI {
             i++;
             x += gp.tileSize;
 
+        }
+
+    }
+    public void drawMessage(){
+        int messageX = gp.tileSize;
+        int messageY = gp.tileSize*4;
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD,20 ));
+
+        for(int i = 0; i < message.size(); i++){
+            if(message.get(i) != null){
+
+                g2d.setColor(Color.BLACK);
+                g2d.drawString(message.get(i), messageX+2, messageY+2);
+                g2d.setColor(Color.WHITE);
+                g2d.drawString(message.get(i), messageX, messageY);
+
+                int counter = messageCounter.get(i) + 1; //messagecounter++
+                messageCounter.set(i, counter); //set the counter to the array
+                messageY += 50;
+
+                if(messageCounter.get(i) > 180){
+                    message.remove(i);
+                    messageCounter.remove(i);
+                }
+            }
         }
 
     }
@@ -161,7 +192,6 @@ public class UI {
             g2d.drawString(">", x- gp.tileSize, y);
         }
     }
-
     public void drawPauseScreen() {
         g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 80F));
         String text = "PAUSA";
@@ -289,6 +319,74 @@ public class UI {
 
 
 
+    }
+    public void drawInventory(){
+
+        //frame
+        int frameX = gp.tileSize*9;
+        int frameY = gp.tileSize;
+        int frameWidth = gp.tileSize*6;
+        int frameHeight = gp.tileSize*5;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        //slot
+        final int slotXstart  = frameX + 20;
+        final int slotYstart = frameY + 20;
+        int slotX = slotXstart;
+        int slotY = slotYstart;
+        int slotSize = gp.tileSize + 3;
+
+        //draw player's items
+        for(int i = 0; i< gp.player.inventory.size(); i++){
+
+            g2d.drawImage(gp.player.inventory.get(i).down1, slotX, slotY, null);
+            slotX += slotSize;
+
+            if(i == 4 || i == 9 || i == 14){
+                slotX = slotXstart;
+                slotY += slotSize;
+            }
+        }
+
+
+        //cursor
+        int cursoX = slotXstart + (slotSize * slotCol);
+        int cursoY = slotYstart + (slotSize* slotRow);
+        int cursoWidth = gp.tileSize;
+        int cursoHeight = gp.tileSize;
+
+        //draw cursor
+        g2d.setColor(Color.white);
+        g2d.setStroke(new BasicStroke(3));
+        g2d.drawRoundRect(cursoX, cursoY, cursoWidth, cursoHeight, 10, 10);
+
+        //description frame
+        int dFrameX = frameX;
+        int dFrameY = frameY + frameHeight;
+        int dFrameWidth = frameWidth;
+        int dFrameHeight = gp.tileSize*3;
+        drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+
+        //draw descripction Text
+        int textX = dFrameX +20;
+        int textY = dFrameY + gp.tileSize;
+        g2d.setFont(g2d.getFont().deriveFont(20F));
+
+        int itemIndex = getItemIndexOnSlot();
+
+        if(itemIndex < gp.player.inventory.size()){
+
+            for(String line: gp.player.inventory.get(itemIndex).description.split("\n")){
+                g2d.drawString(line, textX, textY);
+                textY += 32;
+            }
+
+        }
+
+    }
+    public int getItemIndexOnSlot(){
+        int itemIndex = slotCol + (slotRow*5);
+        return itemIndex;
     }
     public void drawSubWindow(int x, int y, int width, int height) {
 

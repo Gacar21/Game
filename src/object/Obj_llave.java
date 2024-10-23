@@ -12,7 +12,7 @@ public class Obj_llave extends Entity {
 
         name = "llave";
         down1 = setup("/Objects/llave", gp.tileSize,gp.tileSize);
-
+        description = "["+ name + "]\nAbre puertas";
     }
 
 }

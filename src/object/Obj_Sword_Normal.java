@@ -10,5 +10,6 @@ public class Obj_Sword_Normal extends Entity {
         name = "ESPADA NORMAL";
         down1 = setup("/Objects/espada", gp.tileSize, gp.tileSize);
         attacValue = 1 ;
+        description = "["+ name + "]\n Nivel basica";
     }
 }

@@ -1,0 +1,12 @@
+00SueloTierra.png
+false
+01LadoDerechoSueloLadrillos.png
+false
+02LadoIzquierdoSueloLadrillos.png
+false
+03sueloBasura.png
+false
+04SueloLadrillos.png
+false
+05SueloBotella.png
+false
